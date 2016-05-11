@@ -4,10 +4,9 @@ import org.influxdb.impl.InfluxDBImpl;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import com.squareup.okhttp.OkHttpClient;
 
 import retrofit.client.Client;
-import retrofit.client.OkClient;
+import retrofit.client.UrlConnectionClient;
 
 /**
  * A Factory to create a instance of a InfluxDB Database adapter.
@@ -32,7 +31,7 @@ public enum InfluxDBFactory {
 	public static InfluxDB connect(final String url, final String username, final String password) {
 		Preconditions.checkArgument(!Strings.isNullOrEmpty(url), "The URL may not be null or empty.");
 		Preconditions.checkArgument(!Strings.isNullOrEmpty(username), "The username may not be null or empty.");
-		return new InfluxDBImpl(url, username, password, new OkClient(new OkHttpClient()));
+		return new InfluxDBImpl(url, username, password, new UrlConnectionClient());
 	}
 
 

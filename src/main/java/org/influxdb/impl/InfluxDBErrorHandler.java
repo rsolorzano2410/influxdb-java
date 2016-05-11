@@ -15,7 +15,8 @@ class InfluxDBErrorHandler implements ErrorHandler {
 	public Throwable handleError(final RetrofitError cause) {
 		Response r = cause.getResponse();
 		if (r != null && r.getStatus() >= 400) {
-			try (InputStreamReader reader = new InputStreamReader(r.getBody().in(), Charsets.UTF_8)) {
+			try {
+				InputStreamReader reader = new InputStreamReader(r.getBody().in(), Charsets.UTF_8);
 				return new RuntimeException(CharStreams.toString(reader));
 			} catch (IOException e) {
 				e.printStackTrace();

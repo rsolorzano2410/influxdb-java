@@ -28,7 +28,7 @@ import com.google.common.collect.Maps;
 public class BatchProcessor {
 
 	private static final Logger logger = Logger.getLogger(BatchProcessor.class.getName());
-	protected final BlockingQueue<BatchEntry> queue = new LinkedBlockingQueue<>();
+	protected final BlockingQueue<BatchEntry> queue = new LinkedBlockingQueue<BatchEntry>();
 	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 	final InfluxDBImpl influxDB;
 	final int actions;
@@ -139,7 +139,7 @@ public class BatchProcessor {
 
 		// Flush at specified Rate
 		this.scheduler.scheduleAtFixedRate(new Runnable() {
-			@Override
+//			@Override
 			public void run() {
 				write();
 			}
@@ -154,7 +154,7 @@ public class BatchProcessor {
 			}
 
 			Map<String, BatchPoints> databaseToBatchPoints = Maps.newHashMap();
-			List<BatchEntry> batchEntries = new ArrayList<>(this.queue.size());
+			List<BatchEntry> batchEntries = new ArrayList<BatchEntry>(this.queue.size());
 			this.queue.drainTo(batchEntries);
 
 			for (BatchEntry batchEntry : batchEntries) {
